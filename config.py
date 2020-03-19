@@ -18,3 +18,4 @@ class DevConfig(Config):
     DATABASE_QUERY_TIME = 0.0001
     SQLALCHEMY_RECORD_QUERIES = True
     SQLALCHEMY_ECHO = True
+    JSON_AS_ASCII = False
