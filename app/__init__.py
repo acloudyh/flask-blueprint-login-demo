@@ -13,7 +13,6 @@ from flask import Flask, redirect, url_for
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
-from app import logger
 from config import DevConfig
 
 # 注意：实例化SQLAlchemy的代码必须要在引入蓝图之前
