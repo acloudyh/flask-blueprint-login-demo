@@ -6,7 +6,6 @@
 # Description: __init__.py就是构建app的一个函数，并且将views中的蓝图注册
 import logging
 import os
-import time
 from logging.handlers import RotatingFileHandler
 
 from flask import Flask, redirect, url_for
@@ -33,11 +32,12 @@ db.init_app(app)  # 初始化SQLAlchemy , 本质就是将以上的配置读取�
 # 注册蓝图
 app.register_blueprint(auth, url_prefix='/auth')
 
-log_name = time.strftime("flask-%Y-%m-%d.log", time.localtime())
+log_name = 'web-server.log'
 log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
 if not os.path.exists(log_path):  # 创建日志目录
     os.makedirs(log_path)
 
+# backupCount 备份日志个数; maxBytes 单个文件大小
 file_handler = RotatingFileHandler(os.path.join(log_path, log_name), maxBytes=10 * 1024 * 1024,
                                    backupCount=10, encoding='UTF-8')
 logging_format = logging.Formatter("%(asctime)s - [%(filename)s:%(funcName)s:%(lineno)d] - [%("
