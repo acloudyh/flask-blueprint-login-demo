@@ -10,7 +10,7 @@ from flask_login import login_required
 
 from app import db
 from app.models.company import Company
-from service.companyService import getAllCompany
+from app.service.companyService import getAllCompany
 
 company = Blueprint('company', __name__)
 

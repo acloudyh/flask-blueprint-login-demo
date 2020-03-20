@@ -13,7 +13,7 @@ from werkzeug.security import check_password_hash
 from app import login_manager, db
 from app.controller.form.authForms import LoginForm, SignupForm
 from app.models.user import User
-from service.companyService import getAllCompany
+from app.service.companyService import getAllCompany
 
 auth = Blueprint('auth', __name__)
 
