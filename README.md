@@ -1,4 +1,10 @@
 ## 网关服务
+
+### 安装pip3
+```shell script
+apt install python3-pip
+```
+
 ### 安装依赖
 ```shell script
 pip3 install -r requirements.txt
