@@ -24,7 +24,7 @@ Base = declarative_base()
 class Company(Base):
     __tablename__ = 'company'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    username = Column(String(10), unique=True, nullable=False)
+    name = Column(String(10), unique=True, nullable=False)
     age = Column(Integer, nullable=False)
     address = Column(String(50), nullable=False)
 

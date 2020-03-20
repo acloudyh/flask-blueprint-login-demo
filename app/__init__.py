@@ -18,19 +18,21 @@ from config import DevConfig
 db = SQLAlchemy()
 app = Flask(__name__)
 
+app.config.from_object(DevConfig)
+db.init_app(app)  # 初始化SQLAlchemy , 本质就是将以上的配置读取出来
+
 app.secret_key = 'abc'  # 设置表单交互密钥
 login_manager = LoginManager()
 login_manager.init_app(app)  # 初始化应用
 login_manager.session_protection = 'strong'
 
 # 引入蓝图
-from app.auth.controller import auth
-
-app.config.from_object(DevConfig)
-db.init_app(app)  # 初始化SQLAlchemy , 本质就是将以上的配置读取出来
+from app.controller.authController import auth
+from app.controller.companyController import company
 
 # 注册蓝图
 app.register_blueprint(auth, url_prefix='/auth')
+app.register_blueprint(company, url_prefix='/company')
 
 log_name = 'web-server.log'
 log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")

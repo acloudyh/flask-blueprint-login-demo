@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Author  : Yang Hao
-# File    : controller.py
+# File    : authController.py
 # Software: PyCharm
 # Time    : 2020/3/18 21:07
 # Description:
@@ -11,11 +11,11 @@ from flask_login import login_user, current_user, login_required, logout_user
 from werkzeug.security import check_password_hash
 
 from app import login_manager, db
-from app.auth.forms import LoginForm, SignupForm
+from app.controller.form.authForms import LoginForm, SignupForm
+from app.models.user import User
+from service.companyService import getAllCompany
 
 auth = Blueprint('auth', __name__)
-
-from app.models import User
 
 
 @auth.route("/login", methods=['GET', 'POST'])
@@ -31,8 +31,10 @@ def login():
             db.session.add(user_info)
             db.session.commit()
             login_user(user_info, remember=True)
-            current_app.logger.error("用户[%s]登录成功", username)
-            return render_template("auth/index.html")
+            current_app.logger.info("用户[%s]登录成功", username)
+            # 登录成功之后展示首页的数据
+            companys = getAllCompany()
+            return render_template("company/index.html", companys=companys)
         else:
             current_app.logger.error("用户名或密码错误:[%s]:[%s] ", username, password)
             emsg = "用户名或密码密码有误"
@@ -52,7 +54,6 @@ def signup():
         db.session.add(user)
         db.session.commit()
         return redirect(url_for("auth.login"))
-
     return render_template('auth/signup.html', form=form, emsg=emsg)
 
 
