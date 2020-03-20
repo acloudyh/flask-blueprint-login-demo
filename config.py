@@ -13,6 +13,8 @@ class Config(object):
 # 初始化app配置，专门针对SQLAlchemy 进行配置
 class DevConfig(Config):
     DEBUG = True
+    # TODO 换成服务器绝对路径
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:////Users/neo/code/sqlite3flask.db'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///./sqlite3flask.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DATABASE_QUERY_TIME = 0.0001
