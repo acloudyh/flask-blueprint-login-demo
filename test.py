@@ -36,23 +36,14 @@ class User(Base):
     password_hash = Column(String(256))
     authenticated = Column(Boolean, default=False)
 
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
 
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+import hashlib
+salt = 'gateway'
+md5 = hashlib.md5()
+print('ad123min'.encode('utf8'))
+md5.update('ad123min'.encode('utf8'))
+print(md5.hexdigest())
 
 
-# 创建表
-Base.metadata.drop_all(engine)
-Base.metadata.create_all(engine)
 
-# Session = sessionmaker(bind=engine)
-#
-# # 创建 Session 类实例
-# session = Session()
-#
-# company = Company(username='杨', age=1, address='jiangsu', salary=200)
-# session.add(company)
-# session.commit()
-# session.close()
+

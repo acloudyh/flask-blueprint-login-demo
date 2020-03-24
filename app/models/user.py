@@ -7,17 +7,20 @@
 
 
 # 建立users数据表
+import hashlib
+
 from flask_login import UserMixin
-from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db
+
+salt = 'acloudchina'
 
 
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(32))
-    password_hash = db.Column(db.String(256))
+    password = db.Column(db.String(256))
     authenticated = db.Column(db.Boolean, default=False)
 
     @property
@@ -38,12 +41,29 @@ class User(db.Model, UserMixin):
         """False, as anonymous users aren't supported."""
         return False
 
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
     def __init__(self, username, password):
         self.username = username
-        self.set_password(password)
+        self.password = password
+
+
+def set_password(password):
+    """
+    加盐 acloudchina MD5加密
+    :param password:
+    """
+    md5 = hashlib.md5()
+    md5.update((password + salt).encode('utf8'))
+    return md5.hexdigest()
+
+
+def check_password(password, login_password):
+    """
+    检查密码
+    :param password:
+    :param login_password:
+    :return:
+    """
+    md5 = hashlib.md5()
+    md5.update((login_password + salt).encode('utf8'))
+    md5.hexdigest()
+    return password == md5.hexdigest()

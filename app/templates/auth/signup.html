@@ -1,23 +1,52 @@
-{% macro render_field(field) %}
-    <dt>{{ field.label }}:
-    <dd>{{ field(**kwargs)|safe }}
-        {% if field.errors %}
-            <ul class=errors>
-                {% for error in field.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </dd>
-{% endmacro %}
 
-<form method="POST">
-    {{ form.csrf_token }}
-    {{ render_field(form.username) }}
-    {{ render_field(form.password) }}
-    {{ render_field(form.confirm) }}
-    {% if emsg %}
-        <h3> {{ emsg }}</h3>
-    {% endif %}
-    <input type="submit" value="注册">
-</form>
+<div class="panel-body">
+
+    {% for msg in get_flashed_messages(category_filter=['err']) %}　　　　<!--flash信息-->
+    <p style="color: red">{{ msg }}</p>
+    {% endfor %}
+
+    {% for msg in get_flashed_messages(category_filter=['ok']) %}
+    <p style="color: green">{{ msg }}</p>
+    {% endfor %}
+
+    <form role="form" method="POST">
+
+
+            <div class="form-group">
+                <label for="input_name"><span class="glyphicon glyphicon-user"></span>&nbsp;用户名: </label>
+                {{ form.username }}
+            </div>
+            {% for err in form.username.errors %}
+            <div class="col-md-12">
+                <span style="color: red">{{ err }}</span>
+            </div>
+            {% endfor %}
+
+
+            <div class="form-group">
+                <label for="input_password"><span class="glyphicon glyphicon-lock"></span>&nbsp;密码: </label>
+                {{ form.password }}
+            </div>
+            {% for err in form.password.errors %}
+            <div class="col-md-12">
+                <span style="color: red">{{ err }}</span>
+            </div>
+            {% endfor %}
+
+
+            <div class="form-group">
+                <label for="input_repassword"><span class="glyphicon glyphicon-lock"></span>&nbsp;确认密码: </label>
+                {{ form.confirm_password }}
+            </div>
+            {% for err in form.confirm_password.errors %}
+            <div class="col-md-12">
+                <span style="color: red">{{ err }}</span>
+            </div>
+            {% endfor %}
+
+
+            {{ form.csrf_token }}
+            {{ form.submit }}
+
+    </form>
+</div>
