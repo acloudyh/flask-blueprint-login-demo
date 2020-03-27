@@ -30,7 +30,7 @@
     <tbody>
     {% for company in companys %}
     <tr>
-        <th scope="row">{{ company.id }}</th>
+        <th scope="row"><a class="text-warning" href="{{ url_for('company.queryCompanyById', id=company.id) }}">{{ company.id }}</a></th>
         <th>{{ company.name }}</th>
         <th>{{ company.age }}</th>
         <th>{{ company.address }}</th>

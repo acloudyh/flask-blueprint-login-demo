@@ -40,6 +40,10 @@ def generate():
     company.age = str(request.form['age'])
     company.address = str(request.form['address'])
 
+    # company.name = request.get_json().get("name")
+    # company.age = request.get_json().get("age")
+    # company.address = request.get_json().get("address")
+
     db.session.add(company)
     db.session.commit()
     current_app.logger.info('创建成功%s', repr(company))
@@ -71,4 +75,12 @@ def delete(id):
     db.session.delete(company)
     db.session.commit()
     current_app.logger.info('删除成功name:[%s],id:[%s]', company.name, id)
+    return redirect(url_for('company.companys'))
+
+
+@company.route("/<int:id>", methods=['GET'])
+@login_required
+def queryCompanyById(id):
+    company = Company.query.get(id)
+    current_app.logger.info('对象转换json', company.to_json())
     return redirect(url_for('company.companys'))
