@@ -27,8 +27,8 @@ login_manager.init_app(app)  # 初始化应用
 login_manager.session_protection = 'strong'
 
 # 引入蓝图
-from app.controller.authController import auth
-from app.controller.companyController import company
+from app.controller.auth_controller import auth
+from app.controller.company_controller import company
 
 # 注册蓝图
 app.register_blueprint(auth, url_prefix='/auth')

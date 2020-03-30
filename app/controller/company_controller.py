@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Author  : Yang Hao
-# File    : companyController.py
+# File    : company_controller.py
 # Software: PyCharm
 # Time    : 2020/3/20 10:12
 # Description:
@@ -10,7 +10,7 @@ from flask_login import login_required
 
 from app import db
 from app.models.company import Company
-from app.service.companyService import getAllCompany
+from app.service.company_service import getAllCompany
 
 company = Blueprint('company', __name__)
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Author  : Yang Hao
-# File    : authController.py
+# File    : auth_controller.py
 # Software: PyCharm
 # Time    : 2020/3/18 21:07
 # Description:
@@ -12,7 +12,7 @@ from flask_login import login_user, current_user, login_required, logout_user
 from app import login_manager, db
 from app.controller.form.authForms import LoginForm, SignupForm, EditPasswordForm
 from app.models.user import User, check_password, set_password
-from app.service.companyService import getAllCompany
+from app.service.company_service import getAllCompany
 
 auth = Blueprint('auth', __name__)
 
