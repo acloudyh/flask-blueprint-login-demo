@@ -7,6 +7,6 @@
 from app.models.company import Company
 
 
-def getAllCompany():
+def get_all_company():
     companys = Company.query.all()
     return companys

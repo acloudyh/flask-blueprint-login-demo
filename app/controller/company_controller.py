@@ -10,7 +10,7 @@ from flask_login import login_required
 
 from app import db
 from app.models.company import Company
-from app.service.company_service import getAllCompany
+from app.service.company_service import get_all_company
 
 company = Blueprint('company', __name__)
 
@@ -19,7 +19,7 @@ company = Blueprint('company', __name__)
 @login_required
 def companys():
     current_app.logger.info('获取所有信息')
-    companys = getAllCompany()
+    companys = get_all_company()
     return render_template('company/index.html', companys=companys)
 
 
@@ -46,7 +46,7 @@ def generate():
 
     db.session.add(company)
     db.session.commit()
-    current_app.logger.info('创建成功%s', repr(company))
+    current_app.logger.info('创建成功%s', company.to_json())
     return redirect(url_for('company.companys'))
 
 
@@ -75,12 +75,4 @@ def delete(id):
     db.session.delete(company)
     db.session.commit()
     current_app.logger.info('删除成功name:[%s],id:[%s]', company.name, id)
-    return redirect(url_for('company.companys'))
-
-
-@company.route("/<int:id>", methods=['GET'])
-@login_required
-def queryCompanyById(id):
-    company = Company.query.get(id)
-    current_app.logger.info('对象转换json', company.to_json())
     return redirect(url_for('company.companys'))

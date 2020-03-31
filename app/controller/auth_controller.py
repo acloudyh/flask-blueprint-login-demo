@@ -4,15 +4,15 @@
 # Software: PyCharm
 # Time    : 2020/3/18 21:07
 # Description:
-import json
 
 from flask import Blueprint, render_template, redirect, url_for, current_app, request, session, flash
 from flask_login import login_user, current_user, login_required, logout_user
 
 from app import login_manager, db
 from app.controller.form.authForms import LoginForm, SignupForm, EditPasswordForm
-from app.models.user import User, check_password, set_password
-from app.service.company_service import getAllCompany
+from app.models.user import User, check_password
+from app.service.auth_service import update_password, register
+from app.service.company_service import get_all_company
 
 auth = Blueprint('auth', __name__)
 
@@ -35,7 +35,7 @@ def login():
 
             current_app.logger.info("用户[%s]登录成功", login_username)
             # 登录成功之后展示首页的数据
-            companys = getAllCompany()
+            companys = get_all_company()
             return render_template("company/index.html", companys=companys)
         else:
             current_app.logger.error("用户名或密码错误:[%s]:[%s] ", login_username, login_password)
@@ -55,13 +55,7 @@ def signup():
     else:
         form = SignupForm(request.form)
         if form.validate():
-            current_app.logger.info("注册内容%s",
-                                    json.dumps(form.data, ensure_ascii=False, indent=4, separators=(',', ':')))
-            username = form.username.data
-            strPassword = set_password(form.password.data)
-            user = User(username, strPassword)
-            db.session.add(user)
-            db.session.commit()
+            register(form)
             return redirect(url_for("auth.login"))
         return render_template('auth/signup.html', form=form)
 
@@ -91,29 +85,14 @@ def edit_password():
     修改密码,重新登录
     :return:
     """
-
     if request.method == 'GET':
         form = EditPasswordForm()
         return render_template('auth/edit_password.html', form=form)
     else:
         form = EditPasswordForm(request.form)
         if form.validate():
-            username = session['username']
-            original_password = form.original_password.data
-            user_info = User.query.filter(User.username == username).first()
-            if user_info and check_password(user_info.password, original_password):
-                # 设置新密码
-                strPassword = set_password(form.new_password.data)
-                user_info.password = strPassword
-                user_info.authenticated = False
-                db.session.add(user_info)
-                db.session.commit()
-
-                current_app.logger.info("修改密码成功:[%s],请重新登录!", username)
-                session.pop('username', None)
-                # 退出登录,让其重新登录
-            return redirect(url_for("auth.login"))
-        return render_template('auth/edit_password.html', form=form)
+            update_password(form)
+        return redirect(url_for("auth.login"))
 
 
 @login_manager.user_loader  # 定义获取登录用户的方法

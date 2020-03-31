@@ -13,7 +13,7 @@ from flask_login import UserMixin
 
 from app import db
 
-salt = 'acloudchina'
+salt = 'python-flask'
 
 
 class User(db.Model, UserMixin):
@@ -45,8 +45,17 @@ class User(db.Model, UserMixin):
         self.username = username
         self.password = password
 
+    def set_password(self, password):
+        self.password = password
 
-def set_password(password):
+    def to_json(self):
+        dict = self.__dict__
+        if "_sa_instance_state" in dict:
+            del dict["_sa_instance_state"]
+            return dict
+
+
+def init_md5_password(password):
     """
     加盐 acloudchina MD5加密
     :param password:
