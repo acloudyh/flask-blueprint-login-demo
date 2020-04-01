@@ -92,7 +92,8 @@ def edit_password():
         form = EditPasswordForm(request.form)
         if form.validate():
             update_password(form)
-        return redirect(url_for("auth.login"))
+            return redirect(url_for("auth.login"))
+        return render_template('auth/edit_password.html', form=form)
 
 
 @login_manager.user_loader  # 定义获取登录用户的方法
