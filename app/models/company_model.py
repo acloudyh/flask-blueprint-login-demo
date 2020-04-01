@@ -15,4 +15,8 @@ class Company(db.Model):
     address = db.Column(db.String(50), nullable=False)
 
     def to_json(self):
+        """
+        转换json(数据库查询出的对象转换成字典相对应的json)
+        :return:
+        """
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

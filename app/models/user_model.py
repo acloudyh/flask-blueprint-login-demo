@@ -13,7 +13,7 @@ from flask_login import UserMixin
 
 from app import db
 
-salt = 'acloudchina'
+salt = 'python-flask'
 
 
 class User(db.Model, UserMixin):
@@ -49,6 +49,10 @@ class User(db.Model, UserMixin):
         self.password = password
 
     def to_json(self):
+        """
+        转换json(数据库查询出的对象转换成字典相对应的json)
+        :return:
+        """
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
