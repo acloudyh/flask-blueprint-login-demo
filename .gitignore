@@ -1,2 +1,4 @@
 .idea/
 app/logs
+app/study
+*.iml

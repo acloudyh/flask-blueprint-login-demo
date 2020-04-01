@@ -9,7 +9,7 @@ from flask import Blueprint, current_app, render_template, request, redirect, ur
 from flask_login import login_required
 
 from app import db
-from app.models.company import Company
+from app.models.company_model import Company
 from app.service.company_service import get_all_company
 
 company = Blueprint('company', __name__)
@@ -26,46 +26,36 @@ def companys():
 @company.route("/create", methods=['GET', 'POST'])
 @login_required
 def create():
-    current_app.logger.info('获取所有信息')
-    # TODO 有关数据来源移入service中,目前暂时不考虑dao层
-    companys = Company.query.all()
-    return render_template('company/create.html', companys=companys)
+    if request.method == 'GET':
+        return render_template('company/create.html')
+    elif request.method == 'POST':
+        company = Company()
+        # company.name = request.get_json().get("name")
+        # company.age = request.get_json().get("age")
+        # company.address = request.get_json().get("address")
+
+        company.name = str(request.form['name'])
+        company.age = str(request.form['age'])
+        company.address = str(request.form['address'])
+        db.session.add(company)
+        db.session.commit()
+        current_app.logger.info('创建成功%s', company.to_json())
+        return redirect(url_for('company.companys'))
 
 
-@company.route('/generate', methods=['POST'])
-@login_required
-def generate():
-    company = Company()
-    company.name = str(request.form['name'])
-    company.age = str(request.form['age'])
-    company.address = str(request.form['address'])
-
-    # company.name = request.get_json().get("name")
-    # company.age = request.get_json().get("age")
-    # company.address = request.get_json().get("address")
-
-    db.session.add(company)
-    db.session.commit()
-    current_app.logger.info('创建成功%s', company.to_json())
-    return redirect(url_for('company.companys'))
-
-
-@company.route("/edit/<int:id>", methods=['GET', 'PUT'])
+@company.route("/edit/<int:id>", methods=['GET', 'POST'])
 @login_required
 def edit(id):
-    company = Company.query.get(id)
-    return render_template('company/update.html', company=company)
-
-
-@company.route('/change', methods=['POST', 'PUT'])
-@login_required
-def change():
-    company = Company.query.get(str(request.form['id']))
-    company.name = str(request.form['name'])
-    company.age = str(request.form['age'])
-    company.address = str(request.form['address'])
-    db.session.commit()
-    return redirect(url_for('company.companys'))
+    if request.method == 'GET':
+        company = Company.query.get(id)
+        return render_template('company/update.html', company=company)
+    else:
+        company = Company.query.get(str(request.form['id']))
+        company.name = str(request.form['name'])
+        company.age = str(request.form['age'])
+        company.address = str(request.form['address'])
+        db.session.commit()
+        return redirect(url_for('company.companys'))
 
 
 @company.route("/delete/<int:id>", methods=['GET', 'DELETE'])

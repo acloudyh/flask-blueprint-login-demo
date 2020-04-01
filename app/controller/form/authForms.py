@@ -1,6 +1,9 @@
-from flask_wtf import FlaskForm  # , RecaptchaField
-from wtforms import StringField, PasswordField, SubmitField  # , BooleanField
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import EqualTo, DataRequired, Regexp
+
+PASSWORD_REGEXP = '^(?![0-9]+$)(?![^0-9]+$)(?![a-zA-Z]+$)(?![^a-zA-Z]+$)(?![a-zA-Z0-9]+$)[a-zA-Z0-9\\S]{8,20}$'
+USERNAME_REGEXP = '^[0-9a-zA-Z_]{3,16}$'
 
 
 class LoginForm(FlaskForm):
@@ -55,8 +58,7 @@ class SignupForm(FlaskForm):
         # 验证器
         validators=[
             DataRequired('请输入用户名'),
-
-            # Regexp("^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)^.{8,}$", message="用户名规则不正确")
+            Regexp(USERNAME_REGEXP, message="用户名由3-16位数字字母下划线构成")
         ],
         description="用户名",
         # 附加选项,会自动在前端判别
@@ -72,7 +74,7 @@ class SignupForm(FlaskForm):
         # 验证器
         validators=[
             DataRequired('请输入新密码'),
-            Regexp("^[0-9a-zA-Z_]{1,}$", message="密码规则不正确")
+            Regexp(PASSWORD_REGEXP, message="密码必须包含8到20个字母+数字+特殊字符")
         ],
         description="新密码:",
         # 附加选项,会自动在前端判别
@@ -89,7 +91,7 @@ class SignupForm(FlaskForm):
         # 验证器
         validators=[
             DataRequired('确认密码'),
-            Regexp("^[0-9a-zA-Z_]{1,}$", message="密码规则不正确"),
+            Regexp(PASSWORD_REGEXP, message="密码必须包含8到20个字母+数字+特殊字符"),
             EqualTo('password', message="两次密码输入不一致")  # 判断两次输入的密码是否一致
         ],
         description="确认密码",
@@ -118,7 +120,7 @@ class EditPasswordForm(FlaskForm):
         # 验证器
         validators=[
             DataRequired('请输入新密码'),
-            Regexp("^[0-9a-zA-Z_]{1,}$", message="密码规则不正确")
+            Regexp(PASSWORD_REGEXP, message="密码必须包含8到20个字母+数字+特殊字符"),
         ],
         description="新密码",
         # 附加选项,会自动在前端判别
@@ -135,7 +137,8 @@ class EditPasswordForm(FlaskForm):
         # 验证器
         validators=[
             DataRequired('确认密码'),
-            Regexp("^[0-9a-zA-Z_]{1,}$", message="密码规则不正确"),
+            Regexp(PASSWORD_REGEXP,
+                   message="密码必须包含8到20个字母+数字+特殊字符"),
             EqualTo('new_password', message="两次密码输入不一致")  # 判断两次输入的密码是否一致
         ],
         description="确认密码",

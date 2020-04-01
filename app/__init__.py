@@ -45,6 +45,8 @@ file_handler = RotatingFileHandler(os.path.join(log_path, log_name), maxBytes=10
 logging_format = logging.Formatter("%(asctime)s - [%(filename)s:%(funcName)s:%(lineno)d] - [%("
                                    "levelname)s] : %(message)s")
 file_handler.setFormatter(logging_format)
+# file_handler.setLevel(logging.ERROR)
+# app.logger.setLevel(logging.ERROR)
 app.logger.addHandler(file_handler)
 
 

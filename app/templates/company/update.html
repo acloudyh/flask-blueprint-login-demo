@@ -1,30 +1,30 @@
 {% extends "company/base.html" %}
 {% block button %}
-<a href="{{ url_for('company.companys')}}">
-    <button type="button" class="btn btn-dark" id="button-nav">首页</button>
-</a>
+    <a href="{{ url_for('company.companys') }}">
+        <button type="button" class="btn btn-dark" id="button-nav">首页</button>
+    </a>
 {% endblock %}
 
 {% block body %}
-<form action="{{ url_for('company.change')}}" method="post" enctype="multipart/form-data">
-    <input type="hidden" id="id" name="id" value="{{ company.id }}">
+    <form method="POST" enctype="multipart/form-data">
+        <input type="hidden" id="id" name="id" value="{{ company.id }}">
 
-    <div class="form-group">
-        <label for="name" class="font-weight-bold">姓名</label>
-        <input type=text id="name" name="name" class="form-control" value="{{ company.name }}">
-    </div>
+        <div class="form-group">
+            <label for="name" class="font-weight-bold">姓名</label>
+            <input type=text id="name" name="name" class="form-control" value="{{ company.name }}">
+        </div>
 
-    <div class="form-group">
-        <label for="age" class="font-weight-bold">年龄</label>
-        <input type=text id="age" name="age" class="form-control" value="{{ company.age }}">
-    </div>
+        <div class="form-group">
+            <label for="age" class="font-weight-bold">年龄</label>
+            <input type=text id="age" name="age" class="form-control" value="{{ company.age }}">
+        </div>
 
-    <div class="form-group">
-        <label for="address" class="font-weight-bold">地址</label>
-        <input type=text id="address" name="address" class="form-control" value="{{ company.address }}">
-    </div>
+        <div class="form-group">
+            <label for="address" class="font-weight-bold">地址</label>
+            <input type=text id="address" name="address" class="form-control" value="{{ company.address }}">
+        </div>
 
-    <button type=submit class="btn btn-primary">提交</button>
-</form>
+        <button type=submit class="btn btn-primary">提交</button>
+    </form>
 
 {% endblock %}

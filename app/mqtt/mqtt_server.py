@@ -5,7 +5,6 @@
 # Time    : 2020/3/27 11:00
 # Description:
 import sys
-import time
 
 import paho.mqtt.client as mqtt
 

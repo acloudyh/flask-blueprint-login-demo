@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Author  : Yang Hao
-# File    : user.py
+# File    : user_model.py
 # Software: PyCharm
 # Time    : 2020/3/20 10:05
 # Description:
@@ -13,7 +13,7 @@ from flask_login import UserMixin
 
 from app import db
 
-salt = 'python-flask'
+salt = 'acloudchina'
 
 
 class User(db.Model, UserMixin):
@@ -49,10 +49,7 @@ class User(db.Model, UserMixin):
         self.password = password
 
     def to_json(self):
-        dict = self.__dict__
-        if "_sa_instance_state" in dict:
-            del dict["_sa_instance_state"]
-            return dict
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 def init_md5_password(password):

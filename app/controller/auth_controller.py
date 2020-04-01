@@ -10,7 +10,7 @@ from flask_login import login_user, current_user, login_required, logout_user
 
 from app import login_manager, db
 from app.controller.form.authForms import LoginForm, SignupForm, EditPasswordForm
-from app.models.user import User, check_password
+from app.models.user_model import User, check_password
 from app.service.auth_service import update_password, register
 from app.service.company_service import get_all_company
 

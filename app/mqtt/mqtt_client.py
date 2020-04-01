@@ -8,8 +8,6 @@ import time
 
 import paho.mqtt.client as mqtt
 
-from app import config
-
 HOST = "127.0.0.1"
 PORT = 1883
 TOPIC = "mytopic"  # 客户端发布消息topic
@@ -34,7 +32,6 @@ def on_message(client, userdata, msg):
 
 
 if __name__ == '__main__':
-
     client = mqtt.Client(CLIENT_ID)  # ClientId不能重复，所以使用当前时间
     client.username_pw_set("admin", "123456")  # 必须设置，否则会返回「Connected with result code 4」
     client.on_connect = on_connect

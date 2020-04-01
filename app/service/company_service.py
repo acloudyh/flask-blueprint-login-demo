@@ -4,7 +4,7 @@
 # Software: PyCharm
 # Time    : 2020/3/20 10:20
 # Description:
-from app.models.company import Company
+from app.models.company_model import Company
 
 
 def get_all_company():

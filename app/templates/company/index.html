@@ -1,43 +1,43 @@
 {% extends "company/base.html" %}
 {% block button %}
-<a href="{{ url_for('company.create') }}">
-    <button type="button" class="btn btn-dark" id="button-nav">新增</button>
-</a>
+    <a href="{{ url_for('company.create') }}">
+        <button type="button" class="btn btn-dark" id="button-nav">新增</button>
+    </a>
 {% endblock %}
 
 {% block body %}
 
-{% if current_user.is_authenticated %}
-<li>
-    <a>欢迎登陆: {{ current_user.username }}</a>
-    <a href="{{ url_for('auth.logout') }}">注销</a>
-    <a href="{{ url_for('auth.edit_password') }}">修改密码</a>
-</li>
-{% endif %}
+    {% if current_user.is_authenticated %}
+        <li>
+            <a>欢迎登陆: {{ current_user.username }}</a>
+            <a href="{{ url_for('auth.logout') }}">注销</a>
+            <a href="{{ url_for('auth.edit_password') }}">修改密码</a>
+        </li>
+    {% endif %}
 
 
-<table class="table table-striped table-bordered">
-    <thead class="thead-dark">
-    <tr>
-        <th scope="col">编号</th>
-        <th scope="col">姓名</th>
-        <th scope="col">年龄</th>
-        <th scope="col">地址</th>
-        <th scope="col">编辑</th>
-        <th scope="col">删除</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for company in companys %}
-    <tr>
-        <th scope="row"><a class="text-warning" href="{{ url_for('company.queryCompanyById', id=company.id) }}">{{ company.id }}</a></th>
-        <th>{{ company.name }}</th>
-        <th>{{ company.age }}</th>
-        <th>{{ company.address }}</th>
-        <th><a class="text-warning" href="{{ url_for('company.edit', id=company.id) }}">更新</a></th>
-        <th><a class="text-danger" href="{{ url_for('company.delete',id=company.id) }}">删除</a></th>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">编号</th>
+            <th scope="col">姓名</th>
+            <th scope="col">年龄</th>
+            <th scope="col">地址</th>
+            <th scope="col">编辑</th>
+            <th scope="col">删除</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for company in companys %}
+            <tr>
+                <th scope="row">{{ company.id }}</th>
+                <th>{{ company.name }}</th>
+                <th>{{ company.age }}</th>
+                <th>{{ company.address }}</th>
+                <th><a class="text-warning" href="{{ url_for('company.edit', id=company.id) }}">更新</a></th>
+                <th><a class="text-danger" href="{{ url_for('company.delete',id=company.id) }}">删除</a></th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

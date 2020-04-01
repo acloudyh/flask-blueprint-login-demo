@@ -1,15 +1,15 @@
 <!--{% macro render_field(field) %}-->
-<!--<dt>{{ field.label }}:-->
-<!--<dd>{{ field(**kwargs)|safe }}-->
-<!--    {% if field.errors %}-->
-<!--    <ul class=errors>-->
-<!--        {% for error in field.errors %}-->
-<!--        <li>{{ error }}</li>-->
-<!--        {% endfor %}-->
-<!--    </ul>-->
-<!--    {% endif %}-->
-<!--</dd>-->
-<!--{% endmacro %}-->
+    <!--<dt>{{ field.label }}:-->
+    <!--<dd>{{ field(**kwargs)|safe }}-->
+    <!--    {% if field.errors %}-->
+        <!--    <ul class=errors>-->
+        <!--        {% for error in field.errors %}-->
+            <!--        <li>{{ error }}</li>-->
+            <!--        {% endfor %}-->
+        <!--    </ul>-->
+        <!--    {% endif %}-->
+    <!--</dd>-->
+    <!--{% endmacro %}-->
 
 <a href="{{ url_for('auth.signup') }}">注册</a>
 <!--<form method="POST">-->
@@ -17,15 +17,15 @@
 <!--    {{ render_field(form.username) }}-->
 <!--    {{ render_field(form.password) }}-->
 <!--    {% if emsg %}-->
-<!--    <h3> {{ emsg }}</h3>-->
-<!--    {% endif %}-->
+    <!--    <h3> {{ emsg }}</h3>-->
+    <!--    {% endif %}-->
 <!--    <input type="submit" value="登录">-->
 <!--</form>-->
 
 
 <div class="login-box-body">
     {% for msg in get_flashed_messages() %}　　　　　　　　　　<!--这里对应视图函数里定义的提示信息 flash-->
-    <p class="login-box-msg" style="color: red;">{{ msg }}</p>　　　　<!--信息在前端显示-->
+        <p class="login-box-msg" style="color: red;">{{ msg }}</p>　　　　<!--信息在前端显示-->
     {% endfor %}
 
     <form method="POST" id="form-data">　　　　　　　　　　　　　　<!--使用form，这里可以不用写action-->
@@ -33,10 +33,10 @@
             {{ form.username }}　　　　　　　　　　　　　<!--常规情况下，这里应该为一个input框，用来定义用户输入，由于在forms里已经定义，这里直接调用就行-->
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             {% for err in form.username.errors %}　　　　　　　　<!--错误信息-->
-            <div class="col-md-12">
+                <div class="col-md-12">
 
-                <span style="color: red">{{ err }}</span>　　<!--显示错误信息-->
-            </div>
+                    <span style="color: red">{{ err }}</span>　　<!--显示错误信息-->
+                </div>
             {% endfor %}
         </div>
 
@@ -44,9 +44,9 @@
             {{ form.password }}　　　　　　　　　　　　　　　　<!--同上面的用户输入-->
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             {% for err in form.password.errors %}　　　　　　　　　　　　<!--pwd输入错误的提示信息-->
-            <div class="col-md-12">
-                <font style="color: red">{{ err }}</font>
-            </div>
+                <div class="col-md-12">
+                    <font style="color: red">{{ err }}</font>
+                </div>
             {% endfor %}
         </div>
 
