@@ -36,12 +36,7 @@ current_app.logger.info()
 ## 命名规范
 - 包名：全部小写字母，中间可以由点分隔开，不推荐使用下画线。作为命名空间，包名应该具有唯一性，推荐采用公司或组织域名的倒置，如com.apple.quicktime.v2
 - 模块名：全部小写字母，如果是多个单词构成，可以用下画线隔开，auth_controller.py
-- 类名：采用大驼峰法命名，例如:ConfigConstruction
-```
-class ConfigConstruction(object):
-
-```
-
+- 类名：采用大驼峰法命名，例如:LoginForm
 - 异常名：异常属于类，命名同类命名，但应该使用Error作为后缀。如FileNotFoundError
 - 变量名：全部小写字母，如果由多个单词构成，可以用下画线隔开。如果变量应用于模块或函数内部，则变量名可以由单下画线开头；变量类内部私有使用变量名可以双下画线开头。不要命名双下画线开头和结尾的变量，这是Python保留的。另外，避免使用小写L、大写O和大写I作为变量名
 - 函数名和方法名：命名同变量命名，如balance_account、_push_cm_exit。
