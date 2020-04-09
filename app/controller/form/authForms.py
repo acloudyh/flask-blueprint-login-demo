@@ -41,13 +41,6 @@ class LoginForm(FlaskForm):
         }
     )
 
-    submit = SubmitField(
-        label="登录",
-        render_kw={
-            "class": "btn btn-primary btn-block btn-flat",
-        }
-    )
-
 
 class SignupForm(FlaskForm):
     """用户注册表单类"""
@@ -147,11 +140,5 @@ class EditPasswordForm(FlaskForm):
             "class": "form-control",
             "placeholder": "确认密码",
             "required": 'required'  # 表示输入框不能为空
-        }
-    )
-    submit = SubmitField(
-        label="提交",
-        render_kw={
-            "class": "btn btn-success btn-block",
         }
     )

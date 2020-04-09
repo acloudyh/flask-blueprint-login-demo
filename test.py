@@ -7,10 +7,13 @@
 # import hashlib
 # import subprocess
 #
-# salt = 'gateway'
+# import hashlib
+#
+# salt = 'python-flask'
+# password = 'admin'
 # md5 = hashlib.md5()
-# print('ad123min'.encode('utf8'))
-# md5.update('ad123min'.encode('utf8'))
+# md5.update((password + salt).encode('utf8'))
+#
 # print(md5.hexdigest())
 #
 # import re

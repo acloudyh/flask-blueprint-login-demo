@@ -7,17 +7,20 @@
 from flask import current_app, session, json
 
 from app import db
-# 密码初始化
 from app.common.exception_common import ExceptionCommon
 from app.models.user_model import User, init_md5_password, check_password
 
-init_password = 'admin'
+INIT_PASSWORD = 'admin'
 
 
 def reset_password(username):
+    """
+    重置密码.回复默认密码 admin
+    :param username:
+    """
     user = User.query.filter(username == username).first()
     if user is not None:
-        password = init_md5_password(init_password)
+        password = init_md5_password(INIT_PASSWORD)
         user.set_password(password)
         user.authenticated = False
         db.session.add(user)
@@ -26,8 +29,12 @@ def reset_password(username):
         session.pop('username', None)
 
 
-def update_password(form):
-    username = session['username']
+def update_password(form, username):
+    """
+    更新密码,退出重新登录
+    :param form:
+    :param username:
+    """
     original_password = form.original_password.data
     new_password = form.new_password.data
     user_info = User.query.filter(username == username).first()
@@ -52,9 +59,26 @@ def register(form):
     user_info = User.query.filter(username == username).first()
     if user_info:
         current_app.logger.error("用户名已存在:[%s],请重新输入", username)
-        raise ExceptionCommon("用户名已存在")
     else:
         strPassword = init_md5_password(form.password.data)
         user = User(username, strPassword)
-        db.session.add(user)
-        db.session.commit()
+        save_user(user)
+
+
+def get_user_info(username):
+    """
+    根据用户名查询
+    :param username:
+    :return:
+    """
+    user_info = User.query.filter(User.username == username).first()
+    return user_info
+
+
+def save_user(user_info):
+    """
+    保存用户
+    :param user_info:
+    """
+    db.session.add(user_info)
+    db.session.commit()

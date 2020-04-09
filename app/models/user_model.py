@@ -12,11 +12,12 @@ import hashlib
 from flask_login import UserMixin
 
 from app import db
+from app.models.base_model import BaseModel
 
 salt = 'python-flask'
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin, BaseModel):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(32))
@@ -48,17 +49,10 @@ class User(db.Model, UserMixin):
     def set_password(self, password):
         self.password = password
 
-    def to_json(self):
-        """
-        转换json(数据库查询出的对象转换成字典相对应的json)
-        :return:
-        """
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
 
 def init_md5_password(password):
     """
-    加盐 acloudchina MD5加密
+    加盐 python-flask MD5加密
     :param password:
     """
     md5 = hashlib.md5()

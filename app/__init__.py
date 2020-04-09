@@ -18,15 +18,20 @@ from config import DevConfig
 db = SQLAlchemy()
 app = Flask(__name__)
 
+# 初始化配置
 app.config.from_object(DevConfig)
+
+# 初始化 DB
 db.init_app(app)  # 初始化SQLAlchemy , 本质就是将以上的配置读取出来
 
 app.secret_key = 'abc'  # 设置表单交互密钥
 login_manager = LoginManager()
 login_manager.init_app(app)  # 初始化应用
+login_manager.login_view = 'auth.login'
 login_manager.session_protection = 'strong'
 
 # 引入蓝图
+
 from app.controller.auth_controller import auth
 from app.controller.company_controller import company
 
