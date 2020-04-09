@@ -1,12 +1,8 @@
-{% extends "company/base.html" %}
-{% block button %}
-    <a href="{{ url_for('company.companys') }}">
-        <button type="button" class="btn btn-dark" id="button-nav">首页</button>
-    </a>
+{% include "header/header.html" ignore missing %}
 
-{% endblock %}
 
-{% block body %}
+{% block content %}
+
     <form method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name" class="font-weight-bold">姓名</label>

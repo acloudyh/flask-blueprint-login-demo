@@ -1,62 +1,107 @@
-<!--{% macro render_field(field) %}-->
-    <!--<dt>{{ field.label }}:-->
-    <!--<dd>{{ field(**kwargs)|safe }}-->
-    <!--    {% if field.errors %}-->
-        <!--    <ul class=errors>-->
-        <!--        {% for error in field.errors %}-->
-            <!--        <li>{{ error }}</li>-->
-            <!--        {% endfor %}-->
-        <!--    </ul>-->
-        <!--    {% endif %}-->
-    <!--</dd>-->
-    <!--{% endmacro %}-->
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>gateway</title>
+    {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap-3.3.7-dist/css/bootstrap.min.css') }}">
+    {% endblock %}
 
-<a href="{{ url_for('auth.signup') }}">注册</a>
-<!--<form method="POST">-->
-<!--    {{ form.csrf_token }}-->
-<!--    {{ render_field(form.username) }}-->
-<!--    {{ render_field(form.password) }}-->
-<!--    {% if emsg %}-->
-    <!--    <h3> {{ emsg }}</h3>-->
-    <!--    {% endif %}-->
-<!--    <input type="submit" value="登录">-->
-<!--</form>-->
+    {% block js %}
+        <script src="{{ url_for('static', filename='bootstrap-3.3.7-dist/js/bootstrap.min.js') }}"></script>
+    {% endblock %}
+</head>
+
+<style>
+
+    .btn {
+        font-weight: 700;
+        height: 36px;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: default;
+    }
 
 
-<div class="login-box-body">
-    {% for msg in get_flashed_messages() %}　　　　　　　　　　<!--这里对应视图函数里定义的提示信息 flash-->
-        <p class="login-box-msg" style="color: red;">{{ msg }}</p>　　　　<!--信息在前端显示-->
-    {% endfor %}
+    /*
+     * Form styles
+     */
+    .profile-name-card {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        margin: 10px 0 0;
+        min-height: 1em;
+    }
 
-    <form method="POST" id="form-data">　　　　　　　　　　　　　　<!--使用form，这里可以不用写action-->
-        <div class="form-group has-feedback">
-            {{ form.username }}　　　　　　　　　　　　　<!--常规情况下，这里应该为一个input框，用来定义用户输入，由于在forms里已经定义，这里直接调用就行-->
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            {% for err in form.username.errors %}　　　　　　　　<!--错误信息-->
-                <div class="col-md-12">
+    .form-signin input[type=password],
+    .form-signin input[type=text],
+    .form-signin button {
+        width: 100%;
+        display: block;
+        margin-bottom: 10px;
+        z-index: 1;
+        position: relative;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
 
-                    <span style="color: red">{{ err }}</span>　　<!--显示错误信息-->
-                </div>
+    .form-signin .form-control:focus {
+        border-color: rgb(104, 145, 162);
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgb(104, 145, 162);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgb(104, 145, 162);
+    }
+
+    .btn.btn-signin {
+        /*background-color: #4d90fe; */
+        background-color: rgb(104, 145, 162);
+        /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
+        padding: 0px;
+        font-weight: 700;
+        font-size: 14px;
+        height: 36px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        border: none;
+        -o-transition: all 0.218s;
+        -moz-transition: all 0.218s;
+        -webkit-transition: all 0.218s;
+        transition: all 0.218s;
+    }
+
+    .btn.btn-signin:hover,
+    .btn.btn-signin:active,
+    .btn.btn-signin:focus {
+        color: rgb(12, 97, 33);
+    }
+
+</style>
+<body>
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+        <p>登录页</p>
+        <p id="profile-name" class="profile-name-card"></p>
+        <form class="form-signin" method="POST">
+            <input name="username" type="text" class="form-control" placeholder="用户名" required autofocus>
+            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password"
+                   required>
+
+            {{ form.csrf_token }}　
+            {% for msg in get_flashed_messages() %}　　　　　　　　　　
+                <!--这里对应视图函数里定义的提示信息 flash-->
+                <span class="login-box-msg" style="color: red;">{{ msg }}</span>　　　　
+                <!--信息在前端显示-->
             {% endfor %}
-        </div>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">登录</button>
 
-        <div class="form-group has-feedback">
-            {{ form.password }}　　　　　　　　　　　　　　　　<!--同上面的用户输入-->
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            {% for err in form.password.errors %}　　　　　　　　　　　　<!--pwd输入错误的提示信息-->
-                <div class="col-md-12">
-                    <font style="color: red">{{ err }}</font>
-                </div>
-            {% endfor %}
-        </div>
-
-        <div class="row">
-            <div class="col-xs-8">
-            </div>
-            <div class="col-xs-4">
-                {{ form.submit }}　　　　　　　　　　　　<!--提交按钮-->
-                {{ form.csrf_token }}　　　　　　　　　　<!--csrftoken必须要写，同时还要设置 app的secret_key-->
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
+
+</body>
+
+

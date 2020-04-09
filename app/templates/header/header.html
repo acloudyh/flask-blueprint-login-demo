@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>gateway</title>
+    {% block css %}
+        <link rel="stylesheet"
+              href="{{ url_for('static',filename='bootstrap-3.3.7-dist/css/bootstrap.min.css') }}"></link>
+        <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap-3.3.7-dist/css/fileinput.min.css') }}"/>
+    {% endblock %}
+
+    {% block js %}
+        <script src="{{ url_for('static', filename='bootstrap-3.3.7-dist/js/bootstrap.min.js') }}"></script>
+    {% endblock %}
+</head>
+
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-2">
+            <div class="col-xs-12 col-sm-8">
+                <a href="{{ url_for('company.companys') }}">首页</a>
+                {% if current_user.is_authenticated %}
+                    <li>
+                        <a href="{{ url_for('auth.logout') }}">注销</a>
+                        <a href="{{ url_for('auth.signup') }}">注册</a>
+
+                        <a href="{{ url_for('auth.edit_password') }}">修改密码</a>
+                        <a href="{{ url_for('auth.upload_file') }}">文件上传</a>
+                        <a href="{{ url_for('auth.reset') }}">初始化数据</a>
+                    </li>
+                {% endif %}
+
+                {% if not current_user.is_authenticated %}
+                    <li>
+                        <a href="{{ url_for('auth.login') }}">登录</a>
+                    </li>
+                {% endif %}
+                {% block button %}{% endblock %}
+                {% block content %} {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+

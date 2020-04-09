@@ -1,0 +1,17 @@
+{% include "header/header.html" ignore missing %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <form action="{{ url_for('auth.upload_file') }}" enctype='multipart/form-data' method='POST'>
+                <input type="file" name="file">
+                <input type="submit" value="上传">
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+{% endblock %}
