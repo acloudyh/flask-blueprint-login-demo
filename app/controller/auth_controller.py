@@ -18,7 +18,13 @@ from app.models.user_model import User, check_password
 from app.service import auth_service, company_service
 
 auth = Blueprint('auth', __name__)
+# 上传文件路径
 UPLOAD_FOLDER = 'app/static/uploads'
+
+
+@login_manager.user_loader  # 定义获取登录用户的方法
+def load_user(username):
+    return User.query.get(username)
 
 
 @auth.route("/login", methods=['GET', 'POST'])
@@ -143,8 +149,3 @@ def reset():
     username = session['username']
     auth_service.reset_password(username)
     return redirect(url_for("auth.login"))
-
-
-@login_manager.user_loader  # 定义获取登录用户的方法
-def load_user(username):
-    return User.query.get(username)
