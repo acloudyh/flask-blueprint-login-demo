@@ -13,6 +13,7 @@ from flask_login import login_user, current_user, login_required, logout_user
 from werkzeug.utils import secure_filename
 
 from app import login_manager, app, db
+from app.common.exception_common import ExceptionCommon
 from app.controller.form.authForms import LoginForm, EditPasswordForm, SignupForm
 from app.models.user_model import User, check_password
 from app.service import auth_service, company_service
@@ -20,6 +21,7 @@ from app.service import auth_service, company_service
 auth = Blueprint('auth', __name__)
 # 上传文件路径
 UPLOAD_FOLDER = 'app/static/uploads'
+ALLOWED_EXTENSIONS = {'txt'}
 
 
 @login_manager.user_loader  # 定义获取登录用户的方法
@@ -124,6 +126,8 @@ def upload_file():
             # basepath = os.path.dirname(__file__)  # 当前文件所在路径
             basepath = sys.path[0]  # 项目的根目录 manage.py目录
 
+            if not allowed_file(f.filename):
+                raise ExceptionCommon('后缀名不符合哦')
             if not os.path.exists(UPLOAD_FOLDER):
                 os.makedirs(UPLOAD_FOLDER)
             upload_path = os.path.join(basepath, UPLOAD_FOLDER, secure_filename(f.filename))
@@ -131,6 +135,10 @@ def upload_file():
             current_app.logger.info("上传文件成功:[%s] ", upload_path)
             return redirect(url_for("auth.upload_file"))
     return render_template('auth/upload_file.html')
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
 @auth.route('/reset', methods=['GET', 'POST'])

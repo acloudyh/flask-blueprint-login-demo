@@ -20,3 +20,4 @@ class DevConfig(Config):
     SQLALCHEMY_RECORD_QUERIES = True
     SQLALCHEMY_ECHO = True
     JSON_AS_ASCII = False
+    MAX_CONTENT_LENGTH = 20 * 1024 * 1024  # 上传文件最大限制20M
