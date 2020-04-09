@@ -1,4 +1,4 @@
-## 网关服务
+## flask-demo
 
 ### 安装pip3
 ```shell script
@@ -10,7 +10,7 @@ apt install python3-pip
 pip3 install -r requirements.txt
 ```
 
-### 启动gateway项目
+### 启动flask-demo
 ```shell script
 gunicorn -w 1 -b 127.0.0.1:9999 manage:app
 ```
