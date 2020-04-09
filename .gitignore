@@ -1,4 +1,6 @@
 .idea/
+.vscode/
 app/logs
 app/study
+venv/
 *.iml
