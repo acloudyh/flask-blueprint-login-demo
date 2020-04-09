@@ -27,6 +27,8 @@ db.init_app(app)  # 初始化SQLAlchemy , 本质就是将以上的配置读取�
 app.secret_key = 'abc'  # 设置表单交互密钥
 login_manager = LoginManager()
 login_manager.init_app(app)  # 初始化应用
+
+# 未登录时,遇见@login_required,Flask-Login 会拦截请求，把用户发往登录页面 自动跳转登录页的视图
 login_manager.login_view = 'auth.login'
 login_manager.session_protection = 'strong'
 
