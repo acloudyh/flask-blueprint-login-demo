@@ -151,9 +151,9 @@ def reset():
     # 执行sql脚本,数据清空
     db.drop_all()
     db.create_all(app=app)
-    user = User(username='admin', password='215f66f2943c945b4b634034143ab823')
+    user = User(username='admin', password='admin')
     db.session.add(user)
     db.session.commit()
-    username = session['username']
-    auth_service.reset_password(username)
+    # username = session['username']
+    # auth_service.reset_password(username)
     return redirect(url_for("auth.login"))

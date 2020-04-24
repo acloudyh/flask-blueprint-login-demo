@@ -44,10 +44,10 @@ class User(db.Model, UserMixin, BaseModel):
 
     def __init__(self, username, password):
         self.username = username
-        self.password = password
+        self.set_password(password)
 
     def set_password(self, password):
-        self.password = password
+        self.password = init_md5_password(password)
 
 
 def init_md5_password(password):

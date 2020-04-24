@@ -15,12 +15,12 @@ class AuthTest(unittest.TestCase):
         self.username = 'admin'
         self.password = 'admin'
         self.original_password = 'admin'
-        self.new_password = '6yhn^YHN'
-        self.confirm_password = '6yhn^YHN'
-        print('setUp')
+        self.new_password = 'admin123'
+        self.confirm_password = 'admin123'
+        print('-------------------------------开始测试-------------------------------')
 
     def tearDown(self):
-        print('tearDown\n')
+        print('-------------------------------结束测试-------------------------------\n')
 
     def test_01_login(self):
         # 获取csrf_token
@@ -55,7 +55,7 @@ class AuthTest(unittest.TestCase):
         self.password = self.new_password
         self.test_01_login()
 
-        response = self.app.post('/sys_config/reset', follow_redirects=True)
+        response = self.app.post('/auth/reset', follow_redirects=True)
         self.assertTrue('登录' in bytes.decode(response.data), msg='重置失败')
 
     def get_csrf_token(self, url):

@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import EqualTo, DataRequired, Regexp
 
-PASSWORD_REGEXP = '^(?![0-9]+$)(?![^0-9]+$)(?![a-zA-Z]+$)(?![^a-zA-Z]+$)(?![a-zA-Z0-9]+$)[a-zA-Z0-9\\S]{8,20}$'
+PASSWORD_REGEXP = '^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$'
 USERNAME_REGEXP = '^[0-9a-zA-Z_]{3,16}$'
 
 

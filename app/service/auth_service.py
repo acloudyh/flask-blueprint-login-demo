@@ -43,7 +43,7 @@ def update_password(form, username):
         raise ExceptionCommon("用户不存在")
     else:
         if check_password(user_info.password, original_password):
-            user_info.set_password(init_md5_password(new_password))
+            user_info.set_password(new_password)
             user_info.authenticated = False
             db.session.add(user_info)
             db.session.commit()
@@ -60,8 +60,8 @@ def register(form):
     if user_info:
         current_app.logger.error("用户名已存在:[%s],请重新输入", username)
     else:
-        strPassword = init_md5_password(form.password.data)
-        user = User(username, strPassword)
+        str_password = form.password.data
+        user = User(username, str_password)
         save_user(user)
 
 
