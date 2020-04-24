@@ -16,7 +16,6 @@ company = Blueprint('company', __name__)
 
 
 @company.route("/companys", methods=['GET'])
-@login_required
 def companys():
     current_app.logger.info('获取所有信息')
     companys = get_all_company()

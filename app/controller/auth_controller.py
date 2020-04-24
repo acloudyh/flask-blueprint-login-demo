@@ -10,6 +10,7 @@ from datetime import timedelta
 
 from flask import Blueprint, render_template, redirect, url_for, current_app, request, session, flash
 from flask_login import login_user, current_user, login_required, logout_user
+from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 
 from app import login_manager, app, db
@@ -46,7 +47,13 @@ def login():
             session.permanent = True
             app.permanent_session_lifetime = timedelta(minutes=30)
             current_app.logger.info("用户[%s]登录成功", login_username)
-            return redirect(url_for('company.companys'))
+
+            next_url = request.args.get('next')
+            # 如果 next_url 为空或包含域名，判断为不合法的参数
+            if next_url is None or url_parse(next_url).netloc == '':
+                return redirect(url_for('company.companys'))
+            else:
+                return redirect(next_url)
         else:
             current_app.logger.error("用户名或密码错误:[%s]:[%s] ", login_username, login_password)
             flash("用户名或密码密码有误")

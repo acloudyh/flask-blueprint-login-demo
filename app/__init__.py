@@ -10,7 +10,6 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 from config import DevConfig, configs
-
 # 注意：实例化SQLAlchemy的代码必须要在引入蓝图之前
 from log import init_log
 
@@ -49,4 +48,4 @@ app.register_blueprint(company, url_prefix='/company')
 
 @app.route('/')
 def index():
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('company.companys'))
