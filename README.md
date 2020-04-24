@@ -10,10 +10,26 @@ apt install python3-pip
 pip3 install -r requirements.txt
 ```
 
-### 启动flask-demo
-```shell script
-gunicorn -w 1 -b 127.0.0.1:9999 manage:app
+### 修改配置文件
+
+```python
+# 初始化配置文件
+# 根据实际情况修改dev,prod,默认default=DevConfig
+config = configs['default']
+app.config.from_object(config)
 ```
+
+### 启动 flask-demo 项目
+
+> 以配置文件的方式启动
+>
+> ```gunicorn -c gunicorn.conf manage:app```
+
+
+>命令行启动
+>
+>```gunicorn -w 4 -b 0.0.0.0:9999 manage:app```
+
 **说明**： `-w 或 --workers` 指定启动几个进程, `-b 或 --bind` 指定项目启动绑定域名和端口，
 
 
